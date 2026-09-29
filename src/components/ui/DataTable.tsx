@@ -31,7 +31,7 @@ export function DataTable<T>({
       aria-label="Tabel data, dapat digulir horizontal"
       tabIndex={0}
       className={cn(
-        "w-full overflow-x-auto rounded-[20px] border border-slate-200/90 bg-white shadow-[var(--card-shadow)] dark:border-slate-700 dark:bg-[#252F40]",
+        "w-full overflow-x-auto rounded-[17px] border border-slate-200/90 bg-white shadow-[var(--card-shadow)] scrollbar-thin dark:border-slate-700 dark:bg-[#252F40] sm:rounded-[20px]",
         className
       )}
     >
@@ -43,7 +43,7 @@ export function DataTable<T>({
                 key={col.key}
                 scope="col"
                 className={cn(
-                  "px-4 py-3.5 whitespace-nowrap",
+                  "whitespace-nowrap px-3 py-3 sm:px-4 sm:py-3.5",
                   col.align === "right" || col.isNumeric
                     ? "text-right"
                     : col.align === "center"
@@ -62,7 +62,7 @@ export function DataTable<T>({
             <tr>
               <td
                 colSpan={columns.length}
-                className="px-6 py-12 text-center text-sm text-slate-500 dark:text-slate-400"
+                className="px-4 py-10 text-center text-sm text-slate-500 dark:text-slate-400 sm:px-6 sm:py-12"
               >
                 {emptyMessage}
               </td>
@@ -84,7 +84,7 @@ export function DataTable<T>({
                   return (
                     <td
                       key={col.key}
-                      className={cn("px-4 py-3.5 whitespace-nowrap", alignClass, col.className)}
+                      className={cn("whitespace-nowrap px-3 py-3 sm:px-4 sm:py-3.5", alignClass, col.className)}
                     >
                       {col.render
                         ? col.render(row)

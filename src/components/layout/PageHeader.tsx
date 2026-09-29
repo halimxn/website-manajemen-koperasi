@@ -31,17 +31,17 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
 }) => {
   const displayBadge = statusBadge ?? badgeText;
   return (
-    <div className={cn("space-y-3", className)}>
+    <div className={cn("space-y-2.5 sm:space-y-3", className)}>
       {/* Remah Roti (Breadcrumb) Seragam */}
       {breadcrumbItems && breadcrumbItems.length > 0 && (
         <Breadcrumb items={breadcrumbItems} />
       )}
 
       {/* Baris Judul & Aksi Utama yang Terstandarisasi */}
-      <div className="flex flex-col gap-4 rounded-[22px] border border-slate-200/75 bg-white/90 px-5 py-5 shadow-[var(--card-shadow)] dark:border-slate-700/65 dark:bg-[#252F40] md:px-6 md:py-6 xl:flex-row xl:items-center xl:justify-between">
+      <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 dark:border-slate-700/80 xl:flex-row xl:items-end xl:justify-between">
         <div className="min-w-0 space-y-1.5">
           <div className="flex flex-wrap items-center gap-2.5">
-            <h1 className="text-2xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100 md:text-[1.75rem]">
+            <h1 className="text-[1.4rem] font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100 sm:text-2xl md:text-[1.85rem]">
               {title}
             </h1>
             {displayBadge && (
@@ -51,14 +51,14 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
             )}
           </div>
           {description && (
-            <p className="max-w-[68ch] text-[15px] leading-6 text-slate-600 dark:text-slate-300">
+            <p className="max-w-[68ch] text-sm leading-5 text-slate-600 dark:text-slate-300 sm:text-[15px] sm:leading-6">
               {description}
             </p>
           )}
         </div>
 
         {actions && (
-          <div className="flex flex-wrap items-center gap-2.5 xl:shrink-0">
+          <div className="flex w-full flex-wrap items-center gap-2 [&>*]:flex-1 sm:w-auto sm:gap-2.5 sm:[&>*]:flex-none xl:shrink-0">
             {actions}
           </div>
         )}

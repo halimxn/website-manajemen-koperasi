@@ -74,7 +74,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "relative flex h-full w-full max-w-xs md:max-w-sm flex-col bg-white dark:bg-slate-900 shadow-2xl transition-transform duration-300 ease-out",
+          "relative flex h-full w-full max-w-[min(92vw,28rem)] flex-col bg-white dark:bg-slate-900 shadow-2xl transition-transform duration-300 ease-out",
           side === "left"
             ? isActive
               ? "translate-x-0"

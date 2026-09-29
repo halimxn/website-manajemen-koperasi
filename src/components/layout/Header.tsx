@@ -5,7 +5,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Menu,
   Bell,
   HelpCircle,
   Search,
@@ -33,10 +32,6 @@ import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { useOrganizationProfile } from "@/lib/OrganizationContext";
 import { businessStatusLabel } from "@/lib/organization-status";
 
-export interface HeaderProps {
-  onMenuToggle: () => void;
-}
-
 interface NotificationItem {
   id: string;
   title: string;
@@ -49,7 +44,7 @@ interface NotificationItem {
 
 const PREPARATION_NOTIFICATIONS: NotificationItem[] = [];
 
-export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
+export const Header: React.FC = () => {
   const router = useRouter();
   const [currentDateStr, setCurrentDateStr] = useState("");
   const [isNotifOpen, setIsNotifOpen] = useState(false);
@@ -111,21 +106,13 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
   );
 
   return (
-    <header className="sticky top-0 z-30 h-16 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-xl transition-colors dark:border-slate-700/70 dark:bg-[#222C3C]/95 sm:h-[70px]">
-      <div className="flex h-full w-full items-center justify-between gap-3 px-4 md:px-6 lg:px-8">
+    <header className="sticky top-0 z-30 h-14 w-full border-b border-slate-200/80 bg-white/90 backdrop-blur-xl transition-colors dark:border-slate-700/70 dark:bg-[#222C3C]/95 sm:h-16">
+      <div className="flex h-full w-full items-center justify-between gap-2 px-3.5 sm:px-5 md:px-6 lg:px-8">
         {/* Kiri: Toggle Menu (Mobile & Tablet) + Status Tanggal */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onMenuToggle}
-            aria-label="Buka navigasi menu"
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white xl:hidden transition-colors"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-
-          <div className="hidden sm:block shrink-0">
-            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">Zona Waktu Asia/Jakarta</p>
-            <p className="text-xs font-bold text-slate-800 dark:text-slate-200">{currentDateStr || "Memuat tanggal..."}</p>
+        <div className="min-w-0 shrink flex items-center gap-3">
+          <div className="min-w-0 shrink">
+            <p className="hidden text-[11px] font-semibold text-slate-500 dark:text-slate-400 sm:block">Asia/Jakarta</p>
+            <p className="truncate text-xs font-bold text-slate-800 dark:text-slate-200 sm:text-sm">{currentDateStr || "Memuat tanggal..."}</p>
           </div>
         </div>
 
@@ -147,14 +134,14 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
         </div>
 
         {/* Kanan: Toggle Mode Gelap, Bantuan, Notifikasi, Status Mode */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
           <button
             aria-label="Cari menu"
             onClick={() => {
               setSearchQuery("");
               setIsSearchOpen(true);
             }}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors xl:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white sm:h-11 sm:w-11 xl:hidden"
           >
             <Search className="h-5 w-5" />
           </button>
@@ -162,7 +149,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
             onClick={toggleTheme}
             aria-label={theme === "dark" ? "Ganti ke Mode Terang" : "Ganti ke Mode Gelap"}
             title={theme === "dark" ? "Mode Terang" : "Mode Gelap"}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-amber-300 transition-colors shadow-sm"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-600 shadow-sm transition-colors hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:text-amber-400 dark:hover:bg-slate-800 dark:hover:text-amber-300 sm:h-11 sm:w-11"
           >
             {theme === "dark" ? (
               <Sun className="h-5 w-5 transition-transform hover:rotate-45" />
@@ -175,7 +162,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
             onClick={handleLockApp}
             aria-label="Kunci Aplikasi"
             title="Kunci Layar (Kembali ke Input PIN)"
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-50 hover:text-rose-700 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 transition-colors shadow-sm"
+            className="hidden h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-600 shadow-sm transition-colors hover:bg-rose-50 hover:text-rose-700 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-rose-950/40 dark:hover:text-rose-300 md:flex"
           >
             <Lock className="h-5 w-5" />
           </button>
@@ -183,14 +170,14 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
           <button
             aria-label="Pusat Bantuan & Panduan"
             title="Buka Panduan Operasional"
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors"
+            className="hidden h-11 w-11 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white md:flex"
             onClick={() => setIsHelpOpen(true)}
           >
             <HelpCircle className="h-5 w-5" />
           </button>
 
           {/* Popover Notifikasi Nyata */}
-          <div className="relative" ref={notifRef}>
+          <div className="relative hidden sm:block" ref={notifRef}>
             <button
               aria-label="Notifikasi Persiapan"
               aria-expanded={isNotifOpen}
@@ -245,7 +232,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuToggle }) => {
           </div>
 
           {/* Indikator Mode Aplikasi Pribadi */}
-          <div className="hidden md:flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
+          <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-1.5 rounded-xl bg-rose-50/80 dark:bg-rose-950/30 border border-rose-200/60 dark:border-rose-900/60 px-3 py-1.5">
               <Shield className="h-3.5 w-3.5 text-rose-600 dark:text-rose-400" />
               <span className="text-[11px] font-bold text-rose-700 dark:text-rose-300">Aplikasi Pribadi</span>

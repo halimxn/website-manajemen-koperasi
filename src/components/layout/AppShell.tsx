@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { DemoBanner } from "./DemoBanner";
 import { Sidebar } from "./Sidebar";
 import { Header } from "./Header";
+import { MobileNavigation } from "./MobileNavigation";
 import { Drawer } from "@/components/ui/Drawer";
 import { ToastProvider } from "@/components/ui/Toast";
 
@@ -18,6 +19,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
   // Halaman autentikasi ditampilkan mandiri tanpa shell (sidebar/header/banner)
   const isAuthPage =
+    pathname.startsWith("/pin") ||
     pathname.startsWith("/login") ||
     pathname.startsWith("/lupa-password") ||
     pathname.startsWith("/reset-password");
@@ -52,12 +54,12 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
         {/* Kontainer Utama Dua Kolom: Sidebar Sticky Kiri + Kolom Kanan */}
         <div className="flex flex-1 overflow-hidden min-h-0 relative">
-          {/* Sidebar Desktop (>=1024px) */}
+          {/* Sidebar desktop; perangkat di bawah 1280px memakai navigasi bawah. */}
           <aside className="hidden xl:flex flex-col h-full w-72 shrink-0 z-20">
             <Sidebar />
           </aside>
 
-          {/* Drawer Sidebar untuk Layar Mobile & Tablet Potret (<1024px) */}
+          {/* Menu lengkap ponsel dan tablet. */}
           <Drawer
             isOpen={isMobileMenuOpen}
             onClose={() => setIsMobileMenuOpen(false)}
@@ -67,6 +69,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             <Sidebar
               onItemClick={() => setIsMobileMenuOpen(false)}
               onClose={() => setIsMobileMenuOpen(false)}
+              compact
               className="w-full border-r-0 h-full"
             />
           </Drawer>
@@ -75,19 +78,20 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           <div className="flex flex-1 flex-col min-w-0 h-full overflow-hidden">
             {/* Header di LUAR div scroll */}
             <div className="shrink-0">
-              <Header onMenuToggle={() => setIsMobileMenuOpen(true)} />
+              <Header />
             </div>
             {/* Area Konten yang Bisa Digulir */}
             <div
               className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-gutter-stable"
               style={{ scrollbarGutter: "stable" }}
             >
-              <main id="main-content" tabIndex={-1} className="w-full max-w-7xl mx-auto px-4 pb-12 pt-5 md:px-6 md:pt-6 xl:px-8">
+              <main id="main-content" tabIndex={-1} className="mx-auto w-full max-w-7xl px-3.5 pb-28 pt-4 sm:px-5 md:px-6 md:pt-5 xl:px-8 xl:pb-12 xl:pt-6">
                 {children}
               </main>
             </div>
           </div>
         </div>
+        <MobileNavigation onOpenMenu={() => setIsMobileMenuOpen(true)} />
       </div>
     </ToastProvider>
   );

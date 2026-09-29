@@ -1,5 +1,31 @@
 # DESIGN SYSTEM — KOPDES MERAH PUTIH LADANG LAWEH
 
+## Acuan terkini — 29 September 2026
+
+- Halaman memakai judul terbuka dengan garis pemisah, bukan semua bagian dibungkus kartu. Kartu khusus untuk data/pekerjaan yang memang satu kelompok. Bayangan tipis; rose tetap aksen utama, bukan warna seluruh permukaan.
+- Dashboard: sapaan → metrik → pintasan → prioritas → grafik → rincian. Metrik dua kolom pada ponsel dan empat pada desktop. Label tetap terbaca, angka panjang boleh membungkus, tanpa angka rekaan untuk mengisi grafik kosong.
+- Tombol data dikelompokkan dan dapat membungkus. Tanggal tidak diulang pada sapaan karena sudah ada di header. Tautan metrik memakai token `primary` agar mode gelap tetap kontras.
+- Pengaturan: satu bagian aktif, bukan gulir melalui lima bagian. Draf profil harus tetap ada saat beralih bagian. Tema memakai radio native agar keyboard dapat mengubah pilihan.
+- Input bersama 16 px di ponsel (mengurangi zoom otomatis saat fokus di iOS), 14 px mulai tablet. Kontrol header dan tautan terkait minimal 44 px.
+- Pintasan: maksimal enam, grid dua kolom di ponsel, pilihan dan tombol simpan jelas. Preferensi hanya lokal/browser, bukan bagian backup database.
+- Ringkasan harian: dialog pratinjau dahulu, baru salin. Tidak ada pengiriman otomatis; jelaskan data rekap bukan laporan akuntansi resmi.
+- Catatan kalender lama yang menyebut lebar minimum/gulir mendatar sudah digantikan checkpoint 25 September: tujuh kolom harus muat, rincian agenda ditempatkan pada panel terpisah.
+
+Bagian di bawah menyimpan sejarah desain, bukan pengganti acuan terkini. Audit dan batas cakupan ada di [STRUKTUR_DAN_AUDIT.md](STRUKTUR_DAN_AUDIT.md).
+
+## Acuan terkini — 29 September 2026
+
+- Halaman memakai judul terbuka dengan garis pemisah, bukan semua bagian dibungkus kartu. Kartu khusus untuk data/pekerjaan yang memang satu kelompok. Bayangan tipis; rose tetap aksen utama, bukan warna seluruh permukaan.
+- Dashboard: sapaan → metrik → pintasan → prioritas → grafik → rincian. Metrik dua kolom pada ponsel dan empat pada desktop. Label tetap terbaca, angka panjang boleh membungkus, tanpa angka rekaan untuk mengisi grafik kosong.
+- Tombol data dikelompokkan dan dapat membungkus. Tanggal tidak diulang pada sapaan karena sudah ada di header. Tautan metrik memakai token `primary` agar mode gelap tetap kontras.
+- Pengaturan: satu bagian aktif, bukan gulir melalui lima bagian. Draf profil harus tetap ada saat beralih bagian. Tema memakai radio native agar keyboard dapat mengubah pilihan.
+- Input bersama 16 px di ponsel (mengurangi zoom otomatis saat fokus di iOS), 14 px mulai tablet. Kontrol header dan tautan terkait minimal 44 px.
+- Pintasan: maksimal enam, grid dua kolom di ponsel, pilihan dan tombol simpan jelas. Preferensi hanya lokal/browser, bukan bagian backup database.
+- Ringkasan harian: dialog pratinjau dahulu, baru salin. Tidak ada pengiriman otomatis; jelaskan data rekap bukan laporan akuntansi resmi.
+- Catatan kalender lama yang menyebut lebar minimum/gulir mendatar sudah digantikan checkpoint 25 September: tujuh kolom harus muat, rincian agenda ditempatkan pada panel terpisah.
+
+Bagian di bawah menyimpan sejarah desain, bukan pengganti acuan terkini. Audit dan batas cakupan ada di [STRUKTUR_DAN_AUDIT.md](STRUKTUR_DAN_AUDIT.md).
+
 ## Revisi fondasi v2.9.4 — 24 September 2026
 
 - Latar memakai dua radial pastel yang sangat tipis di atas `--background`; mode gelap memakai aksen rose/biru beropasitas rendah. Informasi tetap dominan, bukan dekorasi.

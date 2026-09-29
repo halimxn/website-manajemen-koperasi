@@ -2,21 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import {
-  Settings,
   Building2,
   ShieldCheck,
   Save,
   AlertCircle,
-  FileText,
-  Clock,
   MapPin,
   Palette,
-  Sun,
-  Moon,
-  Monitor,
   User,
   CreditCard,
-  Phone,
   CheckCircle2,
   Database,
   DownloadCloud,
@@ -31,7 +24,6 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardMetric,
 } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
@@ -43,7 +35,7 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useToast } from "@/components/ui/Toast";
 import { LoadingState } from "@/components/ui/LoadingState";
 import { ErrorState } from "@/components/ui/ErrorState";
-import { useTheme, type ThemePreference } from "@/lib/ThemeContext";
+import { AppearanceSettings } from "@/components/pengaturan/AppearanceSettings";
 import { useOrganizationProfile, OrganizationProfileData } from "@/lib/OrganizationContext";
 import { getTodayWIB, formatTanggal } from "@/lib/utils";
 import { OpenAiKeySettings } from "@/components/pengaturan/OpenAiKeySettings";
@@ -76,18 +68,7 @@ export default function PengaturanPage() {
   const [isDirty, setIsDirty] = useState(false);
 
   const { showToast } = useToast();
-  const { theme, preference, setTheme } = useTheme();
-
-  const appearanceOptions: Array<{
-    value: ThemePreference;
-    label: string;
-    description: string;
-    icon: React.ReactNode;
-  }> = [
-    { value: "light", label: "Terang", description: "Cerah dan lembut untuk ruangan terang.", icon: <Sun className="h-5 w-5" /> },
-    { value: "dark", label: "Gelap", description: "Nyaman untuk kerja malam dan cahaya rendah.", icon: <Moon className="h-5 w-5" /> },
-    { value: "system", label: "Ikuti perangkat", description: "Berubah mengikuti pengaturan tablet atau komputer.", icon: <Monitor className="h-5 w-5" /> },
-  ];
+  const [section, setSection] = useState("tampilan");
 
   const fetchProfileFromApi = async () => {
     setIsLoading(true);
@@ -323,7 +304,7 @@ export default function PengaturanPage() {
         title="Profil & Pengaturan Organisasi"
         badgeText={businessStatusLabel(profile.business_status)}
         badgeVariant="crimson"
-        description="Pengelolaan identitas lembaga koperasi, nama pengelola/manajer, wilayah kerja nagari, dan data rekening resmi yang tersimpan permanen di database Supabase."
+        description="Pilih bagian yang ingin diatur. Perubahan profil baru tersimpan setelah Bapak menekan Simpan."
         actions={
           isDirty ? (
             <div className="flex items-center gap-2">
@@ -345,39 +326,37 @@ export default function PengaturanPage() {
         }
       />
 
-      {/* 3 Kartu Metrik Ringkasan Pengaturan */}
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <CardMetric
-          title="Nama Lembaga Koperasi"
-          value={profile.display_name}
-          subtitle={profile.region || "Wilayah belum diisi"}
-          icon={<Building2 className="h-4 w-4 text-rose-600 dark:text-rose-400" />}
-          trend={{ label: "Tersimpan Permanen", positive: true }}
-          accentColor="crimson"
-          action={{ label: "Periksa dokumen", href: "/tata-kelola" }}
-        />
-        <CardMetric
-          title="Pengelola / Manajer"
-          value={profile.manager_name}
-          subtitle={profile.manager_title || "Manajer Koperasi"}
-          icon={<User className="h-4 w-4 text-sky-600 dark:text-sky-400" />}
-          trend={{ label: "Aplikasi Pribadi", positive: true }}
-          accentColor="sky"
-          action={{ label: "Lihat tugas manajer", href: "/pekerjaan" }}
-        />
-        <CardMetric
-          title="Tahun Buku & Konvensi"
-          value={profile.fiscal_year || "Belum ditetapkan"}
-          subtitle="Asia/Jakarta (WIB) • Rupiah (IDR)"
-          icon={<Clock className="h-4 w-4 text-amber-600 dark:text-amber-400" />}
-          trend={{ label: "Standar Keuangan", positive: true }}
-          accentColor="amber"
-          action={{ label: "Lihat laporan", href: "/laporan" }}
-        />
+      <nav
+        aria-label="Navigasi bagian pengaturan"
+        className="sticky top-0 z-20 -mx-3.5 flex gap-2 overflow-x-auto border-y border-slate-200/75 bg-[#F7F8FC]/95 px-3.5 py-2 backdrop-blur-xl scrollbar-thin dark:border-slate-700/75 dark:bg-[#1D2533]/95 sm:mx-0 sm:rounded-2xl sm:border sm:px-3"
+      >
+        {[
+          { href: "#tampilan", label: "Tampilan", icon: Palette },
+          { href: "#keamanan", label: "Keamanan", icon: ShieldCheck },
+          { href: "#integrasi", label: "Integrasi", icon: Link2Off },
+          { href: "#profil-organisasi", label: "Profil", icon: Building2 },
+          { href: "#backup", label: "Backup", icon: Database },
+        ].map(({ href, label, icon: Icon }) => (
+          <button
+            type="button"
+            key={href}
+            aria-pressed={section === href.slice(1)}
+            onClick={() => setSection(href.slice(1))}
+            className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-xs font-semibold text-slate-700 shadow-sm transition-colors hover:border-rose-200 hover:bg-rose-50 hover:text-primary dark:border-slate-700 dark:bg-[#252F40] dark:text-slate-200 dark:hover:border-rose-800 dark:hover:bg-rose-950/30 aria-pressed:border-primary-container aria-pressed:bg-rose-50 aria-pressed:text-primary dark:aria-pressed:bg-rose-950/40"
+          >
+            <Icon className="h-4 w-4" />
+            {label}
+          </button>
+        ))}
+      </nav>
+
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-slate-100/80 px-4 py-3 text-sm dark:bg-slate-800/60">
+        <span className="font-semibold">{profile.display_name}</span>
+        <span className="text-slate-500 dark:text-slate-400">Tahun buku {profile.fiscal_year || "belum ditetapkan"} · WIB · Rupiah</span>
       </div>
 
       {/* Peringatan Integritas Dokumen Hukum */}
-      <div className="rounded-2xl border border-amber-200/80 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/20 p-4 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-3 shadow-sm">
+      {section === "profil-organisasi" && <div className="rounded-2xl border border-amber-200/80 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/20 p-4 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-3 shadow-sm">
         <AlertCircle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <div className="leading-relaxed">
           <p className="font-semibold text-amber-900 dark:text-amber-200 mb-1">Fleksibilitas Identitas &amp; Wilayah Kerja</p>
@@ -386,62 +365,16 @@ export default function PengaturanPage() {
             Perubahan profil yang disimpan masuk ke Supabase.
           </p>
         </div>
-      </div>
+      </div>}
 
-      {/* Pilihan Tema Perangkat */}
-      <Card className="overflow-hidden border-rose-100/90 bg-gradient-to-br from-white via-white to-rose-50/60 dark:border-slate-700 dark:from-[#252F40] dark:via-[#252F40] dark:to-[#302534]">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base">
-            <Palette className="h-5 w-5 text-primary-container dark:text-rose-300" />
-            Kenyamanan Tampilan Perangkat
-          </CardTitle>
-          <CardDescription>
-            Pilihan tema disimpan khusus pada perangkat ini (tablet/komputer) dan tidak mengubah data database.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-3" role="radiogroup" aria-label="Pilih tema tampilan">
-            {appearanceOptions.map((option) => {
-              const isActive = preference === option.value;
-              return (
-                <button
-                  key={option.value}
-                  type="button"
-                  role="radio"
-                  aria-checked={isActive}
-                  onClick={() => {
-                    setTheme(option.value);
-                    showToast("success", "Tampilan Diperbarui", `Mode ${option.label.toLowerCase()} digunakan pada perangkat ini.`);
-                  }}
-                  className={`min-h-[92px] rounded-2xl border p-4 text-left transition-all ${
-                    isActive
-                      ? "border-primary-container bg-rose-50/80 shadow-sm ring-2 ring-rose-100 dark:border-rose-400 dark:bg-rose-950/30 dark:ring-rose-950/60"
-                      : "border-slate-200 bg-white/80 hover:border-rose-200 hover:bg-rose-50/40 dark:border-slate-700 dark:bg-slate-900/45 dark:hover:border-slate-600"
-                  }`}
-                >
-                  <span className="flex items-start gap-3">
-                    <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${isActive ? "bg-primary-container text-white" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"}`}>
-                      {option.icon}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-bold text-slate-900 dark:text-slate-100">{option.label}</span>
-                      <span className="mt-1 block text-xs leading-relaxed text-slate-500 dark:text-slate-400">{option.description}</span>
-                    </span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
-            Tampilan aktif saat ini: <strong className="text-slate-700 dark:text-slate-200">{theme === "dark" ? "gelap" : "terang"}</strong>.
-          </p>
-        </CardContent>
-      </Card>
+      <section id="tampilan" hidden={section !== "tampilan"}><AppearanceSettings /></section>
 
       {/* Keamanan & PIN Akses Manajer */}
-      <ManagerPinSettings />
+      <section id="keamanan" hidden={section !== "keamanan"} className="scroll-mt-20">
+        <ManagerPinSettings />
+      </section>
 
-      <Card>
+      <Card id="integrasi" hidden={section !== "integrasi"} className="scroll-mt-20">
         <CardHeader>
           <CardTitle>Integrasi &amp; sumber data</CardTitle>
           <CardDescription>Sumber aktif saat ini tetap input manual. Pilih API untuk melihat persiapan integrasinya; pilihan ini belum mengubah data atau cara penyimpanan.</CardDescription>
@@ -464,7 +397,7 @@ export default function PengaturanPage() {
         </CardContent>
       </Card>
 
-      <form onSubmit={handleSave} className="space-y-6">
+      <form id="profil-organisasi" hidden={section !== "profil-organisasi"} onSubmit={handleSave} className="scroll-mt-20 space-y-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           {/* Kolom 1: Identitas Lembaga & Status */}
           <Card>
@@ -684,7 +617,7 @@ export default function PengaturanPage() {
       </form>
 
       {/* SEKSI PENCADANGAN & PEMULIHAN SISTEM (Tahap 5) */}
-      <div className="space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800">
+      <div id="backup" hidden={section !== "backup"} className="scroll-mt-20 space-y-4 pt-6 border-t border-slate-200 dark:border-slate-800">
         <div>
           <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Database className="h-5 w-5 text-primary-container" />

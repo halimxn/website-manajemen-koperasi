@@ -2,6 +2,34 @@
 
 Catatan perubahan kronologis proyek untuk pelacakan lintas agen AI dan pengembang.
 
+## [v2.11.0 — ruang kerja ringkas dan audit sumber] — 29 September 2026
+
+- Memperbarui judul halaman bersama, metrik, bayangan, tautan terkait, dan ukuran input ponsel; menata ulang ringkasan/grafik dashboard.
+- Menambah pintasan pilihan lokal maksimal enam dan pratinjau ringkasan koordinasi yang dapat disalin tanpa mengirim pesan otomatis.
+- Mengubah Pengaturan menjadi pemilihan satu bagian aktif dengan draf tetap terjaga; mengekstrak tema dan grafik ke komponen modul.
+- Menambah audit impor TypeScript baca-saja; menghapus hook identitas tetap yang tidak digunakan. Kandidat lain tidak langsung dihapus.
+- Menambah tes preferensi, salin ringkasan, dan navigasi Pengaturan; menyamakan transformasi JSX Vitest dengan Next.
+- Panduan desain, peta folder, keputusan audit, batas cakupan, dan kelanjutan diperbarui. Tanpa SQL/dependensi baru. Hasil verifikasi final tercatat di STATUS.
+
+## [v2.10.2 — kalender tanggal responsif] — 25 September 2026
+
+- Menghapus lebar minimum kalender Tugas & Agenda agar tujuh kolom hari terlihat sekaligus pada ponsel.
+- Menyesuaikan tinggi, jarak, informasi agenda, dan popup DateInput untuk ponsel kecil sambil mempertahankan tampilan rinci pada tablet/desktop.
+- Tanpa perubahan Supabase. Browser mobile, 216 tes, typecheck, dan build 43 halaman berhasil.
+
+## [v2.10.1 — pencarian menu dan pintasan Pengaturan] — 25 September 2026
+
+- Menambah pencarian pada panel semua menu, termasuk pencarian berdasarkan kelompok seperti “laporan”, serta keadaan kosong yang informatif.
+- Menandai tombol Semua sebagai lokasi aktif pada halaman non-pintasan dan menambah navigasi cepat Tampilan, Keamanan, Integrasi, Profil, serta Backup di Pengaturan.
+- Tidak mengubah Supabase. Verifikasi browser mode terang/gelap, 216 tes lulus, typecheck bersih, dan build 43 halaman sukses.
+
+## [v2.10.0 — fondasi responsive mobile dan tablet] — 25 September 2026
+
+- Menambah navigasi bawah lima akses untuk ponsel/tablet dan menu lengkap dua kolom, sehingga perpindahan pekerjaan utama tidak memerlukan gulir menu panjang.
+- Memadatkan header, banner, judul halaman, kartu, tabel, dialog, drawer, keadaan kosong, dan tautan terkait pada layar kecil tanpa mengurangi target sentuh.
+- Memisahkan komponen navigasi mobile, membebaskan layar PIN dari shell aplikasi, serta menghapus `ModulePlaceholder` yang terbukti tidak dipakai. Tidak mengubah Supabase atau data koperasi.
+- Verifikasi: 215 tes lulus, typecheck bersih, build 43 halaman berhasil, dan spot-check browser mobile terang/gelap selesai.
+
 ## [v2.9.15 — audit detail Meja Kerja] — 24 September 2026
 
 - Memeriksa enam halaman utama di browser tablet. Merapikan filter Meja Kerja yang sempit, memperjelas keadaan kosong tanpa klaim kondisi lapangan aman, dan menambah pintasan ke rekap gerai.

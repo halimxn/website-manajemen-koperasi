@@ -2,6 +2,8 @@
 
 Sistem Informasi Manajemen & Pemantauan Gerai Koperasi berbahasa Indonesia, dioptimalkan untuk perangkat **Tablet** dan **Komputer/Desktop**. Status organisasi: Mode **Persiapan** menuju operasional bertahap awal 2027.
 
+Kondisi terbaru ada di [docs/STATUS.md](docs/STATUS.md). Peta folder, kandidat kode tidak terpakai, dan petunjuk perawatan ada di [docs/STRUKTUR_DAN_AUDIT.md](docs/STRUKTUR_DAN_AUDIT.md). Jalankan `npm.cmd run audit:source` untuk audit baca-saja; hasil kandidat tidak boleh langsung dihapus.
+
 ---
 
 ## Fokus Utama Sistem

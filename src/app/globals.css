@@ -19,7 +19,7 @@
     --border-subtle: #F1F5F9;
     --border-muted: #E2E8F0;
     --surface-soft: #F2F5FA;
-    --card-shadow: 0 1px 2px rgb(40 52 73 / 4%), 0 12px 32px rgb(40 52 73 / 4%);
+    --card-shadow: 0 2px 5px rgb(40 52 73 / 3%);
   }
 
   .dark {
@@ -35,7 +35,7 @@
     --border-subtle: #303C50; /* Slate 800 */
     --border-muted: #3B4960; /* Slate 700 */
     --surface-soft: #222D3D;
-    --card-shadow: 0 1px 2px rgb(0 0 0 / 10%), 0 16px 36px rgb(0 0 0 / 8%);
+    --card-shadow: 0 2px 5px rgb(0 0 0 / 9%);
   }
 
   * {

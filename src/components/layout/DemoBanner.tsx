@@ -15,16 +15,16 @@ export const DemoBanner: React.FC = () => {
   return (
   <aside
     aria-label="Status aplikasi"
-    className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-rose-100 dark:border-slate-700 bg-rose-50 dark:bg-slate-800 px-4 py-2 text-xs text-slate-600 dark:text-slate-300"
+    className="flex min-h-8 items-center justify-between gap-3 border-b border-rose-100 bg-rose-50 px-3.5 py-1.5 text-[11px] text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 sm:px-5 sm:text-xs"
   >
     <span className="flex items-center gap-2">
       <Info className="h-4 w-4 shrink-0 text-primary-container dark:text-rose-400" />
       <strong>{businessStatusLabel(profile.business_status)}</strong>
-      <span className="hidden md:inline">{profile.region || "Wilayah kerja belum diisi"}</span>
+      <span className="hidden lg:inline">{profile.region || "Wilayah kerja belum diisi"}</span>
     </span>
     <span className="flex items-center gap-1.5 font-medium">
       <ShieldCheck className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-      <span>
+      <span className="hidden sm:inline">
         {hasSupabase
           ? "Aplikasi Pribadi Manajer · Supabase Dikonfigurasi"
           : "Aplikasi Pribadi Manajer · Akses Privat Lokal"}

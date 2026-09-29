@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -25,6 +25,7 @@ import {
   ClipboardList,
   Scale,
   Inbox,
+  Search,
   X,
   LucideIcon,
 } from "lucide-react";
@@ -63,9 +64,11 @@ export interface SidebarProps {
   onItemClick?: () => void;
   onClose?: () => void;
   className?: string;
+  compact?: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ onItemClick, onClose, className }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ onItemClick, onClose, className, compact = false }) => {
+  const [menuQuery, setMenuQuery] = useState("");
   const pathname = usePathname();
   const activeHref = getActiveNavigationHref(pathname);
   const productionMode = isSupabaseConfigured();
@@ -86,6 +89,32 @@ export const Sidebar: React.FC<SidebarProps> = ({ onItemClick, onClose, classNam
     ...group,
     items: productionMode ? group.items.filter((item) => PRODUCTION_READY_ROUTES.has(item.href)) : group.items,
   })).filter((group) => group.items.length > 0);
+  const baseDisplayedGroups = compact
+    ? [
+        visibleGroups[0],
+        visibleGroups[1],
+        {
+          groupName: "Manajemen Koperasi",
+          items: visibleGroups.slice(2).flatMap((group) => group.items),
+        },
+      ].filter((group): group is (typeof visibleGroups)[number] => Boolean(group?.items.length))
+    : visibleGroups;
+  const normalizedQuery = menuQuery.trim().toLowerCase();
+  const displayedGroups = normalizedQuery
+    ? baseDisplayedGroups
+        .map((group) => ({
+          ...group,
+          items: group.items.filter((item) => {
+            const originalGroup = visibleGroups.find((sourceGroup) =>
+              sourceGroup.items.some((sourceItem) => sourceItem.href === item.href)
+            );
+            return `${item.title} ${originalGroup?.groupName ?? ""} ${item.href}`
+              .toLowerCase()
+              .includes(normalizedQuery);
+          }),
+        }))
+        .filter((group) => group.items.length > 0)
+    : baseDisplayedGroups;
 
   return (
     <div
@@ -120,14 +149,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ onItemClick, onClose, classNam
         )}
       </div>
 
+      {compact && (
+        <div className="shrink-0 border-b border-slate-100 px-3 py-2.5 dark:border-slate-800">
+          <label htmlFor="mobile-menu-search" className="sr-only">Cari menu</label>
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+            <input
+              id="mobile-menu-search"
+              type="search"
+              value={menuQuery}
+              onChange={(event) => setMenuQuery(event.target.value)}
+              placeholder="Cari menu…"
+              className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 pl-9 pr-3 text-sm text-slate-900 outline-none transition focus:border-primary-container focus:bg-white focus:ring-4 focus:ring-rose-100/70 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-rose-400 dark:focus:bg-slate-900 dark:focus:ring-rose-950/50"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Navigation Groups - dengan pb-5 agar item paling bawah (Pengaturan) selalu terangkat naik dan terlihat jelas */}
-      <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden pl-3.5 pr-2.5 pt-4 pb-5 space-y-5 scrollbar-thin scrollbar-gutter-stable">
-        {visibleGroups.map((group) => (
-          <div key={group.groupName} className="space-y-1">
+      <div className={cn("flex-1 min-h-0 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-gutter-stable", compact ? "space-y-3 px-3 py-3" : "space-y-5 pb-5 pl-3.5 pr-2.5 pt-4")}>
+        {displayedGroups.map((group) => (
+          <div key={group.groupName} className={cn("space-y-1", compact && "space-y-1.5")}>
             <h2 className="px-3 text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
               {group.groupName}
             </h2>
-            <nav aria-label={group.groupName} className="space-y-1">
+            <nav aria-label={group.groupName} className={cn("space-y-1", compact && "grid grid-cols-2 gap-1.5 space-y-0")}>
               {group.items.map((item) => {
                 const IconComponent = ICON_MAP[item.iconName] || LayoutDashboard;
                 const isActive =
@@ -148,19 +194,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ onItemClick, onClose, classNam
                     onClick={onItemClick}
                     className={cn(
                       "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors min-h-[48px]",
+                      compact && "min-h-[52px] flex-col items-start justify-center gap-1 px-3 py-2 text-xs",
                       isActive
                         ? "bg-rose-50 dark:bg-rose-400/10 text-primary dark:text-rose-200 font-bold ring-1 ring-rose-100 dark:ring-rose-300/10"
                         : "text-slate-600 dark:text-slate-400 hover:bg-slate-100/80 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-slate-100"
                     )}
                   >
-                    <div className="flex items-center gap-3 truncate min-w-0 flex-1">
+                    <div className={cn("flex items-center gap-3 truncate min-w-0 flex-1", compact && "w-full gap-2")}>
                       <IconComponent
                         className={cn(
                           "h-5 w-5 shrink-0 transition-colors",
                           isActive ? "text-primary-container dark:text-rose-400" : "text-slate-400 dark:text-slate-500"
                         )}
                       />
-                      <span className="truncate">{item.title}</span>
+                      <span className={cn("truncate", compact && "whitespace-normal leading-tight")}>{item.title}</span>
                     </div>
                     {item.badge && (
                       <div className="shrink-0 ml-2">
@@ -178,7 +225,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ onItemClick, onClose, classNam
             </nav>
           </div>
         ))}
-        {productionMode && (
+        {displayedGroups.length === 0 && (
+          <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-8 text-center dark:border-slate-700">
+            <Search className="mx-auto h-6 w-6 text-slate-400" />
+            <p className="mt-2 text-sm font-semibold text-slate-700 dark:text-slate-200">Menu tidak ditemukan</p>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Coba kata seperti gerai, tugas, laporan, atau pengaturan.</p>
+          </div>
+        )}
+        {productionMode && !compact && (
           <p className="mx-2 px-2 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
             Gunakan Meja Kerja untuk melihat hal yang perlu ditindaklanjuti hari ini.
           </p>
@@ -186,7 +240,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ onItemClick, onClose, classNam
       </div>
 
       {/* Manager Profile Footer — Aplikasi Pribadi */}
-      <div className="px-4 py-3.5 border-t border-slate-100 dark:border-slate-700/70 bg-slate-50/60 dark:bg-[#252F40] shrink-0">
+      <div className={cn("px-4 py-3.5 border-t border-slate-100 dark:border-slate-700/70 bg-slate-50/60 dark:bg-[#252F40] shrink-0", compact && "hidden")}>
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl font-bold text-sm bg-primary-container text-white shadow-sm">
             {initials}

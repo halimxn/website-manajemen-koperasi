@@ -224,7 +224,7 @@ export default function PinPage() {
               type="button"
               onClick={() => handleKeyPress(num)}
               disabled={isBusy}
-              className="flex h-13 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-xl font-bold text-slate-800 transition active:scale-95 active:bg-rose-100 hover:bg-rose-50 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700"
+              className="flex h-12 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-xl font-bold text-slate-800 transition active:scale-95 active:bg-rose-100 hover:bg-rose-50 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700 sm:h-14"
             >
               {num}
             </button>
@@ -234,7 +234,7 @@ export default function PinPage() {
             type="button"
             onClick={handleClear}
             disabled={isBusy || pin.length === 0}
-            className="flex h-13 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-xs font-bold text-slate-600 transition active:scale-95 hover:bg-slate-100 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700"
+            className="flex h-12 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-xs font-bold text-slate-600 transition active:scale-95 hover:bg-slate-100 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700 sm:h-14"
           >
             Bersihkan
           </button>
@@ -243,7 +243,7 @@ export default function PinPage() {
             type="button"
             onClick={() => handleKeyPress("0")}
             disabled={isBusy}
-            className="flex h-13 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-xl font-bold text-slate-800 transition active:scale-95 active:bg-rose-100 hover:bg-rose-50 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700"
+            className="flex h-12 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-xl font-bold text-slate-800 transition active:scale-95 active:bg-rose-100 hover:bg-rose-50 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-100 dark:hover:bg-slate-700 sm:h-14"
           >
             0
           </button>
@@ -253,7 +253,7 @@ export default function PinPage() {
             onClick={handleDelete}
             disabled={isBusy || pin.length === 0}
             aria-label="Hapus digit terakhir"
-            className="flex h-13 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-slate-600 transition active:scale-95 hover:bg-slate-100 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700"
+            className="flex h-12 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 text-slate-600 transition active:scale-95 hover:bg-slate-100 dark:border-slate-700/60 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:bg-slate-700 sm:h-14"
           >
             <Delete className="h-5 w-5" />
           </button>

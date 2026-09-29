@@ -215,10 +215,10 @@ export const TaskCalendarView: React.FC<TaskCalendarViewProps> = ({
               </div>
 
               {/* Kontainer Grid Kalender yang Responsif */}
-              <div className="scrollbar-thin -mx-1 overflow-x-auto px-1 pb-2">
-                <div className="min-w-[620px]">
+              <div className="min-w-0 pb-2">
+                <div className="w-full min-w-0">
                   {/* Baris Nama Hari (Senin s/d Minggu) */}
-                  <div className="grid grid-cols-7 gap-1 border-b border-slate-100 dark:border-slate-800 py-2.5 text-center text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  <div className="grid grid-cols-7 gap-0.5 border-b border-slate-100 py-2 text-center text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:text-slate-400 sm:gap-1 sm:py-2.5 sm:text-xs sm:tracking-wider">
                     <span>Sen</span>
                     <span>Sel</span>
                     <span>Rab</span>
@@ -229,12 +229,12 @@ export const TaskCalendarView: React.FC<TaskCalendarViewProps> = ({
                   </div>
 
                   {/* Grid Tanggal Hari dalam Bulan */}
-                  <div className="grid grid-cols-7 gap-1.5 pt-2">
+                  <div className="grid grid-cols-7 gap-0.5 pt-1.5 sm:gap-1.5 sm:pt-2">
                     {/* Kotak kosong sebelum tanggal 1 */}
                     {Array.from({ length: firstDayIndex }).map((_, i) => (
                       <div
                         key={`empty-${i}`}
-                        className="min-h-[75px] sm:min-h-[90px] rounded-xl bg-slate-50/50 dark:bg-slate-900/20 border border-transparent"
+                        className="min-h-[54px] rounded-lg border border-transparent bg-slate-50/50 dark:bg-slate-900/20 sm:min-h-[90px] sm:rounded-xl"
                       />
                     ))}
 
@@ -255,7 +255,7 @@ export const TaskCalendarView: React.FC<TaskCalendarViewProps> = ({
                           aria-pressed={isSelected}
                           aria-current={isToday ? "date" : undefined}
                           className={cn(
-                            "min-h-[75px] sm:min-h-[90px] p-2 rounded-xl text-left border transition-all flex flex-col justify-between select-none",
+                            "flex min-h-[54px] min-w-0 select-none flex-col justify-between rounded-lg border p-1 text-left transition-all sm:min-h-[90px] sm:rounded-xl sm:p-2",
                             isSelected
                               ? "border-primary-container bg-rose-50/70 dark:border-rose-400 dark:bg-rose-950/40 ring-2 ring-primary-container/40 shadow-sm"
                               : isToday
@@ -263,10 +263,10 @@ export const TaskCalendarView: React.FC<TaskCalendarViewProps> = ({
                               : "border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/40 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/40"
                           )}
                         >
-                          <div className="flex items-center justify-between w-full">
+                          <div className="flex w-full items-center justify-center sm:justify-between">
                             <span
                               className={cn(
-                                "text-xs font-bold inline-flex items-center justify-center w-6 h-6 rounded-full",
+                                "inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold sm:h-6 sm:w-6",
                                 isToday && !isSelected && "bg-sky-600 text-white font-black",
                                 isSelected && "bg-primary-container text-white font-black",
                                 !isToday && !isSelected && "text-slate-700 dark:text-slate-300"
@@ -275,14 +275,14 @@ export const TaskCalendarView: React.FC<TaskCalendarViewProps> = ({
                               {dayNum}
                             </span>
                             {dayTasks.length > 0 && (
-                              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-200">
+                              <span className="ml-0.5 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-100 px-1 text-[9px] font-bold text-rose-800 dark:bg-rose-900/60 dark:text-rose-200 sm:ml-0 sm:h-auto sm:min-w-0 sm:px-1.5 sm:py-0.5 sm:text-[10px]">
                                 {dayTasks.length}
                               </span>
                             )}
                           </div>
 
                           {/* Cuplikan Event Ringkas */}
-                          <div className="space-y-1 mt-1 w-full overflow-hidden">
+                          <div className="mt-1 hidden w-full space-y-1 overflow-hidden sm:block">
                             {dayTasks.slice(0, 2).map((t) => (
                               <div
                                 key={t.id}

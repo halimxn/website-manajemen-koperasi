@@ -10,7 +10,7 @@ export const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-[20px] border border-slate-200/75 bg-white text-slate-900 shadow-[var(--card-shadow)] transition-colors duration-200 dark:border-slate-700/65 dark:bg-[#252F40] dark:text-slate-100",
+      "rounded-2xl border border-slate-200/80 bg-white text-slate-900 shadow-[var(--card-shadow)] transition-colors duration-200 dark:border-slate-700/65 dark:bg-[#252F40] dark:text-slate-100 sm:rounded-[20px]",
       className
     )}
     {...props}
@@ -24,7 +24,7 @@ export const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1 p-5 pb-2 md:p-6 md:pb-2", className)}
+    className={cn("flex flex-col space-y-1 p-4 pb-2 sm:p-5 sm:pb-2 md:p-6 md:pb-2", className)}
     {...props}
   />
 ));
@@ -62,7 +62,7 @@ export const CardContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("p-5 md:p-6", className)}
+    className={cn("p-4 sm:p-5 md:p-6", className)}
     {...props}
   />
 ));
@@ -75,7 +75,7 @@ export const CardFooter = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex items-center p-5 md:p-6 pt-3 md:pt-4 border-t border-slate-100/80 dark:border-slate-700/60 bg-slate-50/50 dark:bg-slate-800/30 rounded-b-2xl mt-2",
+      "mt-2 flex items-center rounded-b-2xl border-t border-slate-100/80 bg-slate-50/50 p-4 pt-3 dark:border-slate-700/60 dark:bg-slate-800/30 sm:p-5 md:p-6 md:pt-4",
       className
     )}
     {...props}
@@ -166,12 +166,12 @@ export const CardMetric: React.FC<CardMetricProps> = ({
       )}
       {...props}
     >
-      <CardContent className="flex-1 space-y-3 p-5 md:p-5">
+      <CardContent className="flex-1 space-y-3 p-3.5 sm:p-5">
         {/* Baris 1: Header Atas (Kategori di Kiri, Badge / Status di Kanan) */}
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2 min-w-0">
-            {icon && <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/80 bg-white/85 text-primary dark:border-slate-700 dark:bg-slate-800/70 dark:text-rose-200">{icon}</span>}
-            <span className="text-sm font-semibold text-slate-500 dark:text-slate-400">
+          <div className="flex min-w-0 flex-col items-start gap-2 sm:flex-row sm:items-center">
+            {icon && <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/80 bg-white/85 text-primary dark:border-slate-700 dark:bg-slate-800/70 dark:text-rose-200">{icon}</span>}
+            <span className="text-sm font-medium leading-5 text-slate-600 dark:text-slate-300">
               {title}
             </span>
           </div>
@@ -203,7 +203,7 @@ export const CardMetric: React.FC<CardMetricProps> = ({
         </div>
 
         {/* Baris 2: Nilai Utama / Judul */}
-        <div className="break-words text-2xl font-bold text-slate-900 dark:text-slate-100 leading-snug tracking-tight tabular-nums">
+        <div className="break-words text-xl font-bold text-slate-900 dark:text-slate-100 leading-snug tracking-tight tabular-nums sm:text-2xl">
           {value}
         </div>
 
@@ -216,19 +216,19 @@ export const CardMetric: React.FC<CardMetricProps> = ({
 
         {/* Baris 4: Deskripsi / Penjelas */}
         {effectiveSubtitle && (
-          <p className="text-sm text-slate-500 dark:text-slate-400 font-normal leading-relaxed">
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-normal leading-relaxed sm:text-sm">
             {effectiveSubtitle}
           </p>
         )}
       </CardContent>
       {action && (
-        <div className="border-t border-slate-200/60 px-5 dark:border-slate-700/60">
+        <div className="border-t border-slate-200/60 px-3.5 dark:border-slate-700/60 sm:px-5">
           {action.href ? (
-            <Link href={action.href} className="flex min-h-11 items-center justify-between gap-2 text-sm font-semibold text-primary-container">
+            <Link href={action.href} className="flex min-h-11 items-center justify-between gap-2 py-2 text-xs font-semibold text-primary sm:text-sm">
               {action.label}<ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0" />
             </Link>
           ) : (
-            <button type="button" onClick={action.onClick} className="flex min-h-11 w-full items-center justify-between gap-2 text-left text-sm font-semibold text-primary-container">
+            <button type="button" onClick={action.onClick} className="flex min-h-11 w-full items-center justify-between gap-2 py-2 text-left text-xs font-semibold text-primary sm:text-sm">
               {action.label}<ArrowUpRight aria-hidden="true" className="h-4 w-4 shrink-0" />
             </button>
           )}

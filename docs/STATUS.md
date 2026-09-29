@@ -1,5 +1,43 @@
 # Status Proyek — Kopdes Merah Putih Ladang Laweh
 
+## Checkpoint 29 September 2026 — tampilan ringkas, fitur koordinasi, dan audit kode
+
+- **Fondasi tampilan:** judul halaman tidak lagi berupa kartu besar, bayangan kartu lebih ringan, tautan terkait sederhana, metrik dashboard dua kolom pada ponsel/empat pada desktop. Input bersama 16 px pada ponsel dan tombol header minimal 44 px. Mode terang/gelap tetap memakai identitas rose.
+- **Dashboard:** tanggal tidak diulang dalam sapaan; grafik dipindahkan sebelum rincian panjang. Tambahan `Akses cepat` dapat dipilih hingga enam menu, disimpan lokal per browser, disinkronkan antar-tab, dan tidak ikut backup Supabase.
+- **Ringkasan harian:** tombol membuka pratinjau ringkasan data dashboard dan cuplikan delapan tindak lanjut. Manajer dapat menyalin setelah meninjau. Ada jalur salin manual bila clipboard ditolak; tidak mengirim pesan dan tidak menghubungi AI. Angka operasional tidak disebut SHU/laba resmi.
+- **Pengaturan:** lima bagian dipilih satu per satu, bukan semuanya memanjang. Isian profil belum disimpan tetap bertahan ketika berganti bagian (diuji). Profil hanya disimpan lewat aksi Simpan yang sudah ada. Panel tema diekstrak dan memakai radio native.
+- **Struktur:** grafik → `src/components/dashboard/DashboardTrends.tsx`; fitur dashboard dipisah dari halaman; tema → `src/components/pengaturan/AppearanceSettings.tsx`; validasi preferensi dan pembentukan teks ringkasan di `src/lib`. Tidak merombak nama folder rute Next.js.
+- **Audit baca-saja:** `npm.cmd run audit:source` menelusuri impor TypeScript: 129 berkas, 123 terjangkau, enam kandidat tinjauan. `src/lib/useCurrentUser.ts` dihapus karena tidak digunakan dan berisi identitas tetap; dapat dipulihkan dari Git. Kandidat yang dipakai tes dan komponen dengan perubahan sesi sebelumnya dipertahankan. Riwayat SQL/data koperasi tidak dihapus.
+- **Batas cakupan:** ini perapian fondasi bersama serta dashboard/Pengaturan, bukan klaim semua halaman telah didesain ulang dan diuji satu per satu. Audit lengkap formulir, modularisasi backup/profil, dan kandidat berkas berikutnya tercatat di [STRUKTUR_DAN_AUDIT.md](STRUKTUR_DAN_AUDIT.md).
+- **Browser:** dashboard dan dialog pintasan 390 px, Pengaturan mode gelap 820 px, dashboard desktop 1366 px. Perpindahan Profil diperiksa tanpa menyimpan data. API dashboard/profil pada server lokal mengembalikan 200. Data operasional masih kosong, sehingga grafik berisi transaksi belum diverifikasi visual. Tema dikembalikan ke terang dan override ukuran browser direset.
+- **Supabase:** tidak ada SQL, tabel, data usaha, atau pengaturan kunci yang diubah. Tidak ada dependensi baru. PIN/konektor gerai/pembukuan tidak diubah.
+- **Verifikasi akhir:** **228/228 tes lulus (32 berkas tes)**, TypeScript 0 galat, build Next.js sukses menghasilkan 43 halaman statis dalam proses build. Tes Pengaturan dijalankan ulang setelah koreksi tipe opsi pencarian tes dan lulus. `git diff --check` bersih. Build tidak berjalan bersamaan dengan dev.
+
+Panduan serah terima: baca checkpoint ini → `STRUKTUR_DAN_AUDIT.md` → bagian terkini `DESIGN_SYSTEM.md` → `DECISIONS.md`. Perubahan awal mobile/navigation/kalender dari 25 September sudah ada di working tree dan dipertahankan. Belum commit/push.
+
+## Checkpoint 25 September 2026 — kalender dan input tanggal responsif
+
+- Kalender Tugas & Agenda tidak lagi memaksa lebar 620 px. Seluruh tujuh hari, Senin–Minggu, kini terlihat sekaligus pada ponsel tanpa gulir mendatar.
+- Kotak tanggal menyesuaikan perangkat: ringkas pada ponsel dengan nomor dan jumlah agenda, lalu menampilkan cuplikan judul agenda pada tablet/desktop. Area tanggal tetap mudah disentuh.
+- Popup `DateInput` bersama juga dipadatkan untuk ponsel kecil: tujuh kolom hari, navigasi bulan, tombol Kosongkan, dan Hari ini tetap muat utuh. Perubahan berlaku pada seluruh formulir yang memakai komponen tanggal bersama.
+- Browser terintegrasi memeriksa kalender utama serta popup tanggal pada layar mobile. Tidak ada perubahan Supabase. Verifikasi: **216/216 tes lulus**, TypeScript 0 galat, build Next.js **43 halaman berhasil**.
+
+## Checkpoint 25 September 2026 — pencarian menu & navigasi cepat Pengaturan
+
+- Panel **Semua menu** pada ponsel/tablet kini memiliki pencarian langsung. Pencarian memahami nama halaman, alamat rute, dan kelompok aslinya; kata “laporan” misalnya menampilkan Pemantauan Keuangan serta Neraca & SHU.
+- Tombol **Semua** pada navigasi bawah otomatis mendapat penanda aktif ketika pengguna berada di Pengaturan, Laporan, Anggota, Stok, dan halaman lain di luar empat pintasan utama.
+- Halaman Pengaturan mendapat navigasi bagian yang tetap terlihat saat menggulir: Tampilan, Keamanan, Integrasi, Profil, dan Backup. Ini mempersingkat perjalanan pada halaman yang panjang tanpa memecah data ke menu baru.
+- Mode terang dan gelap diperiksa melalui browser terintegrasi. Tidak ada perubahan SQL, skema, API, atau data Supabase. Verifikasi: **216/216 tes Vitest lulus**, TypeScript strict 0 galat, build Next.js **43 halaman berhasil**.
+
+## Checkpoint 25 September 2026 — fondasi mobile & tablet
+
+- Navigasi layar di bawah desktop kini memakai **bar bawah lima akses**: Ringkasan, Meja Kerja, Tugas, Gerai, dan Semua. Empat pekerjaan harian dapat dibuka tanpa menggulir daftar menu panjang.
+- Tombol **Semua** membuka menu lengkap berbentuk kisi dua kolom. Kelompok menu dipadatkan menjadi Menu Utama, Operasional Gerai, dan Manajemen Koperasi; area sentuh tetap minimal 52 px. Sidebar desktop tetap memakai susunan lengkap sebelumnya.
+- Header ponsel hanya menampilkan tanggal, pencarian, dan tema. Tombol keamanan, panduan, notifikasi, serta status lengkap tetap tersedia sesuai lebar tablet/desktop atau melalui menu terkait. Banner status dibuat satu baris pada ponsel.
+- Fondasi visual bersama dirapikan untuk layar kecil: jarak konten, `PageHeader`, kartu, tabel, dialog, drawer, dan keadaan kosong lebih hemat ruang; tautan halaman terkait dapat digeser mendatar tanpa menambah tinggi halaman. Layar PIN berdiri sendiri tanpa sidebar/header aplikasi.
+- Struktur kode: navigasi ponsel dipisah ke `MobileNavigation.tsx`; satu komponen contoh lama `ModulePlaceholder.tsx` dihapus setelah dipastikan tidak memiliki pemakai. Rute kompatibilitas autentikasi dan file database tidak dihapus karena masih memiliki fungsi.
+- Tidak ada perubahan SQL, skema, API, atau data Supabase. Verifikasi akhir: **215/215 tes Vitest lulus**, TypeScript strict 0 galat, build Next.js **43 halaman statis/dinamis berhasil dibuat**. Browser terintegrasi memeriksa navigasi bawah dan panel Semua pada lebar ponsel dalam mode terang/gelap.
+
 ## Checkpoint 24 September 2026 — gerbang PIN manajer dan pemulihan WhatsApp
 
 - **Layar PIN Manajer (`/pin`)**: Akses awal kini dilindungi gerbang PIN 4 digit yang ramah tablet/desktop. Tombol numerik virtual (0-9) dengan tinggi 56 px, 4 indikator titik interaktif, dukungan ketikan keyboard fisik, dan auto-submit saat 4 digit terisi. Default PIN awal: `1234`.

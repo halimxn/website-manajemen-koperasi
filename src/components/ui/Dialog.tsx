@@ -91,7 +91,7 @@ export const Dialog: React.FC<DialogProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Modal */}
-        <div className="flex shrink-0 items-start justify-between border-b border-slate-100 bg-gradient-to-r from-white via-white to-rose-50/60 p-5 dark:border-slate-700 dark:from-[#252F40] dark:via-[#252F40] dark:to-[#302534] md:p-6">
+        <div className="flex shrink-0 items-start justify-between border-b border-slate-100 bg-gradient-to-r from-white via-white to-rose-50/60 p-4 dark:border-slate-700 dark:from-[#252F40] dark:via-[#252F40] dark:to-[#302534] sm:p-5 md:p-6">
           <div className="flex min-w-0 items-start gap-3 pr-4">
             {icon && (
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-rose-100 text-primary-container dark:bg-rose-950/60 dark:text-rose-300">
@@ -118,7 +118,7 @@ export const Dialog: React.FC<DialogProps> = ({
         </div>
 
         {/* Konten dengan Scroll Internal (Aman untuk keyboard tablet/ponsel) */}
-        <div className={cn("scrollbar-thin flex-1 overflow-y-auto p-5 text-slate-700 dark:text-slate-200 md:p-6", bodyClassName)}>
+        <div className={cn("scrollbar-thin flex-1 overflow-y-auto p-4 text-slate-700 dark:text-slate-200 sm:p-5 md:p-6", bodyClassName)}>
           {children}
         </div>
 

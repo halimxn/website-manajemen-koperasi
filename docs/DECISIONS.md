@@ -1,5 +1,13 @@
 # DECISIONS — KOPDES MERAH PUTIH LADANG LAWEH
 
+## Keputusan implementasi 29 September 2026 — perapian tanpa perubahan database
+
+- Struktur App Router tetap; pecah komponen menurut tanggung jawab, bukan memindahkan semua folder demi nama baru. Kandidat hasil audit impor harus ditinjau sebelum dihapus.
+- Pintasan adalah preferensi lokal browser (maksimal enam), bukan data organisasi. Jangan memasukkannya ke klaim backup Supabase atau sinkronisasi antarperangkat.
+- Ringkasan koordinasi berasal dari data dashboard, ditinjau manajer sebelum disalin; tidak memakai AI atau mengirim ke pihak lain secara otomatis.
+- Pengaturan menampilkan satu bagian aktif tetapi mempertahankan draf selama halaman tetap terbuka. Pergantian bagian bukan aksi simpan.
+- Perubahan desain bersama tidak membuktikan semua formulir/rute sudah diuji. Batas audit dan kelanjutan dicatat dalam STRUKTUR_DAN_AUDIT.md.
+
 ## Keputusan 24 September 2026 — API gerai dan pembukuan
 
 - Abdul Halim belum memiliki API bank; rencana integrasi berasal dari sistem gerai. Menyimpan API key gerai **tidak** mengaktifkan konektor. Manual tetap aktif sampai ada penyedia, format, pengujian, antrean impor, dan persetujuan manajer.
